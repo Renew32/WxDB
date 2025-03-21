@@ -63,7 +63,7 @@
     <div class="container mt-5">
         <!-- Filtres -->
         <div class="row mb-3">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="filterVille" class="form-label">Filtrer par ville :</label>
                 <select id="filterVille" class="form-select">
                     <option value="">Toutes les villes</option>
@@ -72,7 +72,7 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <label for="filterType" class="form-label">Filtrer par type :</label>
                 <select id="filterType" class="form-select">
                     <option value="">Tous les types</option>
@@ -81,22 +81,30 @@
                     {% endfor %}
                 </select>
             </div>
+        
+            <div class="col-md-3 ">
+            <label for="entriesSelect" class="form-label me-2">Effectuer une recherche:</label>
+            <!-- Barre de recherche -->
+            <input type="text" id="searchInput" class="form-control mb-3" placeholder="Rechercher un prestataire..." onkeyup="filterTable()">
+            
         </div>
-
-        <!-- Barre de recherche -->
-        <input type="text" id="searchInput" class="form-control mb-3" placeholder="Rechercher un prestataire..." onkeyup="filterTable()">
-
-        <!-- Sélection du nombre d'entrées à afficher -->
-        <div class="mb-3 d-flex align-items-center">
-            <label for="entriesSelect" class="form-label me-2">Afficher</label>
+            <!-- Sélection du nombre d'entrées à afficher -->
+        <div class="col-md-3 ">
+            <label for="entriesSelect" class="form-label me-2">Afficher:</label>
             <select id="entriesSelect" class="form-select w-auto me-2">
-                <option value="15">5</option>
+                <option value="15">15</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
                 <option value="100">100</option>
             </select>
-            <span>entrées</span>
         </div>
+        
+
+        </div>
+
+        
+
+        
 
         <!-- Tableau des prestataires -->
         <div class="table-responsive">
