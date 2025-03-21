@@ -1,3 +1,9 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/utilities";
+
+
+
 .top-navbar {
     background-color: #EAECF6;
     z-index: 1050; /* Toujours au-dessus */
@@ -25,7 +31,7 @@
 /* Empêche le contenu d'être caché sous les navbars */
 body {
     padding-top: calc(50px + 75px); /* Calcule automatiquement la hauteur des navbars */
-}
+    background-color: whitesmoke}
 
 .top-header {
     background: #f8f9fa;
@@ -156,3 +162,4 @@ body {
 #searchInput:focus {
     border-color: #007bff;
 }
+
