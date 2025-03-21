@@ -1,5 +1,5 @@
 .top-navbar {
-    background-color: #EAECF6;
+    background-color: white;
     z-index: 1050; /* Toujours au-dessus */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     height: 50px; /* Ajuste si nécessaire */
@@ -18,10 +18,6 @@
 
 .text-navbar2{
     color: white;
-    display: flex; /* Aligner les éléments sur la même ligne */
-    align-items: center; /* Centrer verticalement */
-    justify-content: space-between; /* Répartir les liens */
-    gap: 20px;
     
 }
 
