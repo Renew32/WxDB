@@ -1,0 +1,163 @@
+.top-navbar {
+    background-color: white;
+    z-index: 1050; /* Toujours au-dessus */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 50px; /* Ajuste si nécessaire */
+
+}
+
+.bottom-navbar {
+    background-color: #0033A0;
+    z-index: 1040;
+    display: inline;
+    height: 75px;
+
+
+   
+}
+
+.text-navbar2{
+    color: white;
+    
+}
+
+/* Empêche le contenu d'être caché sous les navbars */
+body {
+    padding-top: calc(50px + 75px); /* Calcule automatiquement la hauteur des navbars */
+}
+
+.top-header {
+    background: #f8f9fa;
+    padding: 10px 0;
+    font-size: 14px;
+    
+}
+.top-header a {
+    text-decoration: none;
+    color: #0033a0;
+    font-weight: bold;
+    
+}
+.main-header {
+    background: white;
+    padding: 15px 0;
+    border-bottom: 2px solid #e0e0e0;
+    
+}
+.main-header .nav-link {
+    color: #0033a0;
+    font-weight: bold;
+    margin: 0 10px;
+    
+}
+.btn-custom {
+    border-radius: 20px;
+    font-weight: bold;
+}
+.btn-danger {
+    background: #e60028;
+    border-color: #e60028;
+}
+.btn-primary {
+    background: #000a8f;
+    border-color: #000a8f;
+}
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-btn {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    background: white;
+    font-size: 14px;
+}
+
+.page-btn.active {
+    background: #0033A0;
+    color: white;
+    font-weight: bold;
+}
+
+#noResults {
+    background-color: #0033A0;  /* Fond bleu */
+    color: white;  /* Texte blanc */
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px; /* Coins arrondis */
+    font-weight: bold;
+    font-size: large;
+}
+
+.pagination {
+    color: #0033A0;
+}
+
+.pagination a, 
+.pagination span {
+    background-color: #0033A0;  /* Couleur de fond des cases */
+    color: white;  /* Texte blanc pour bien contraster */
+    padding: 8px 12px;  /* Ajuste l'espacement */
+    margin: 2px;  /* Espacement entre les cases */
+    margin-bottom: 40px;
+    border-radius: 5px;  /* Coins arrondis */
+    text-decoration: none; /* Supprime le soulignement des liens */
+}
+
+/*Ne sert pas*/
+.pagination a:hover {
+    background-color: #0056b3;  /* Couleur au survol */
+}
+
+.border-bottom{
+    background-image: url("../img/terre2.jpeg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 300px; /* Hauteur pour s'assurer que l'image apparaît */
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: rgb(255, 255, 255); /* Rendre le texte visible */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ajouter un léger contour noir pour améliorer la lisibilité */
+    
+}
+
+.text-body-emphasis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%; /* Assure que le conteneur prend toute la largeur */
+    margin: 0 auto; /* Centre le conteneur */
+    padding-top: 50px; /* Ajuste selon l'espace nécessaire */
+    
+    color: white !important; /* Forcer le texte à être blanc */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Ajouter un léger contour noir pour améliorer la lisibilité */
+
+}
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+#searchInput {
+    width: 300px; /* Largeur fixe */
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s ease-in-out;
+}
+
+#searchInput:focus {
+    border-color: #007bff;
+}
