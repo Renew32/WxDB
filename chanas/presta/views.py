@@ -38,7 +38,7 @@ def login_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(request, username=email, password=password)
-        if user is not None:
+        if user is  None:
             login(request, user)
             return redirect('home')  # Redirection vers la page d'accueil après connexion
         else:

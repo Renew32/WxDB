@@ -92,6 +92,30 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    function clearAll() {
+        filterVille.value = "";
+        filterType.value = "";
+        searchInput.value = "";
+        noResults.innerHTML = "";
+        entriesSelect.value = "5"; // ou une valeur par défaut
+        paginationContainer.innerHTML = "";
+
+        // Réafficher toutes les lignes du tableau
+        document.querySelectorAll("#prestataireTable tr").forEach(row => {
+            row.style.display = "";
+        });
+
+        // Supprimer le message "Aucun résultat"
+        document.getElementById("noResults").innerHTML = "";
+
+        // Réinitialiser la pagination
+        document.getElementById("pagination").innerHTML = "";
+    }
+    
+    
+
+    
+
     // Événements
     filterVille.addEventListener("change", filterTable);
     filterType.addEventListener("change", filterTable);
@@ -102,4 +126,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     filterTable();
+    clearAll();
+    
+
+    
+    
 });
