@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const entriesSelect = document.getElementById("entriesSelect");
     const paginationContainer = document.getElementById("pagination");
 
-    let rowsPerPage = parseInt(entriesSelect.value, 10);
+    let rowsPerPage = 15;
     let currentPage = 1;
 
     function filterTable() {
@@ -91,27 +91,6 @@ document.addEventListener("DOMContentLoaded", function () {
             paginationContainer.appendChild(nextBtn);
         }
     }
-
-    function clearAll() {
-        filterVille.value = "";
-        filterType.value = "";
-        searchInput.value = "";
-        noResults.innerHTML = "";
-        entriesSelect.value = "5"; // ou une valeur par défaut
-        paginationContainer.innerHTML = "";
-
-        // Réafficher toutes les lignes du tableau
-        document.querySelectorAll("#prestataireTable tr").forEach(row => {
-            row.style.display = "";
-        });
-
-        // Supprimer le message "Aucun résultat"
-        document.getElementById("noResults").innerHTML = "";
-
-        // Réinitialiser la pagination
-        document.getElementById("pagination").innerHTML = "";
-    }
-    
     
 
     
