@@ -1,5 +1,12 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/utilities";
+@import "node_modules/bootstrap/scss/bootstrap";
+
+
+
 .top-navbar {
-    background-color: white;
+    background-color: #EAECF6;
     z-index: 1050; /* Toujours au-dessus */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     height: 50px; /* Ajuste si nécessaire */
@@ -11,20 +18,21 @@
     z-index: 1040;
     display: inline;
     height: 75px;
-
-
-   
 }
 
 .text-navbar2{
     color: white;
+    display: flex; /* Aligner les éléments sur la même ligne */
+    align-items: center; /* Centrer verticalement */
+    justify-content: space-between; /* Répartir les liens */
+    gap: 3px;
     
 }
 
 /* Empêche le contenu d'être caché sous les navbars */
 body {
     padding-top: calc(50px + 75px); /* Calcule automatiquement la hauteur des navbars */
-}
+    background-color: whitesmoke}
 
 .top-header {
     background: #f8f9fa;
@@ -44,24 +52,16 @@ body {
     border-bottom: 2px solid #e0e0e0;
     
 }
+
 .main-header .nav-link {
     color: #0033a0;
     font-weight: bold;
     margin: 0 10px;
     
 }
-.btn-custom {
-    border-radius: 20px;
-    font-weight: bold;
-}
-.btn-danger {
-    background: #e60028;
-    border-color: #e60028;
-}
-.btn-primary {
-    background: #000a8f;
-    border-color: #000a8f;
-}
+
+
+
 .pagination-container {
     display: flex;
     justify-content: center;
@@ -75,12 +75,14 @@ body {
     cursor: pointer;
     background: white;
     font-size: 14px;
+    border-radius: 20px;
 }
 
 .page-btn.active {
     background: #0033A0;
     color: white;
     font-weight: bold;
+
 }
 
 #noResults {
@@ -161,3 +163,4 @@ body {
 #searchInput:focus {
     border-color: #007bff;
 }
+
