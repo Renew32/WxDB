@@ -1,6 +1,7 @@
 @import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/utilities";
+@import "node_modules/bootstrap/scss/bootstrap";
 
 
 
@@ -115,7 +116,7 @@ body {
 }
 
 .border-bottom{
-    background-image: url("../img/sante.png");
+    background-image: url("../img/sante2.jpeg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
