@@ -10,14 +10,14 @@
             
         </title>
         {% load static %}
-    </head>
+    
 
     <!-- Bootstrap CSS -->
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        {% load static %}
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    </head>
 
 <body>
     <!-- Barre de navigation supérieure -->
@@ -38,23 +38,37 @@
     </nav>
 
     <!-- Deuxième barre de navigation -->
-    <nav class="navbar fixed-top bottom-navbar" style="top: 50px;">
+    <nav class="navbar navbar-expand-lg fixed-top bottom-navbar" style="top: 50px">
         <div class="container d-flex justify-content-between align-items-center">
             <!-- Logo -->
-            <a class="navbar-brand logo" href="https://www.chanasassurances.com">
-                <img src="{% static 'img/chanas.png' %}" alt="Logo" width="75%">
+            <a class="navbar-brand" href="https://www.chanasassurances.com">
+                <img src="{% static 'img/chanas.png' %}" alt="Logo" width="85">
             </a>
+    
+            <!-- Bouton de menu pour mobile -->
+            <button class="navbar-toggler " type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+    
             <!-- Menu de navigation -->
-            <div class="text-navbar2">
-                <a class="nav-link d-inline" href="https://www.chanasassurances.com/particulier/assurance-auto/">VÉHICULES</a> 
-                <span class="mx-2"></span>
-                <a class="nav-link d-inline" href="#">HABITATION</a>
-                <span class="mx-2"></span>
-                <a class="nav-link d-inline" href="#">ÉPARGNE & PRÉVOYANCE</a>
-                <span class="mx-2"></span>
-                <a class="nav-link d-inline" href="#">SANTÉ</a>
-                <span class="mx-2"></span>
-                <a class="nav-link d-inline" href="#">DÉCLARER SINISTRE</a>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav text-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://www.chanasassurances.com/particulier/assurance-auto/">VÉHICULES</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">HABITATION</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">ÉPARGNE & PRÉVOYANCE</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">SANTÉ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">DÉCLARER SINISTRE</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>
@@ -66,12 +80,12 @@
             <p class="lead mb-4">Vous trouverez dans le tableau la liste de nos prestataires soins au Cameroun et ailleurs.</p>
         </div>
     </div>
-
+    
     <!-- Contenu principal -->
     <div class="container mt-5">
         <!-- Filtres -->
-        <div class="row mb-3">
-            <div class="col-md-3">
+        <div class="row mb-3 g-3">
+            <div class="col-lg-3 col-md-6">
                 <label for="filterVille" class="form-label">Filtrer par ville :</label>
                 <select id="filterVille" class="form-select">
                     <option value="">Toutes les villes</option>
@@ -80,7 +94,7 @@
                     {% endfor %}
                 </select>
             </div>
-            <div class="col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <label for="filterType" class="form-label">Filtrer par type :</label>
                 <select id="filterType" class="form-select">
                     <option value="">Tous les types</option>
@@ -90,31 +104,28 @@
                 </select>
             </div>
         
-            <div class="col-md-3 ">
-                <label for="entriesSelect" class="form-label me-2">Faire une recherche:</label>
-                <!-- Barre de recherche -->
-                <input type="text" id="searchInput" class="form-control mb-3" placeholder="Rechercher un prestataire..." onkeyup="filterTable()">
+            <div class="col-lg-3 col-md-6">
+                <label for="searchInput" class="form-label">Rechercher :</label>
+                <input type="text" id="searchInput" class="form-control" placeholder="Rechercher un prestataire..." onkeyup="filterTable()">
             </div>
-            <!-- Sélection du nombre d'entrées à afficher -->
-            <div class="col-md-3 ">
-                <label for="entriesSelect" class="form-label me-2">Afficher:</label>
-                <select id="entriesSelect" class="form-select w-auto me-2">
+            
+            <div class="col-lg-3 col-md-6">
+                <label for="entriesSelect" class="form-label">Afficher :</label>
+                <select id="entriesSelect" class="form-select">
+                    <option value="5">5</option>
+                    <option value="8" selected>8</option>
                     <option value="15">15</option>
                     <option value="25">25</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
+                    <option value="50">30</option>
                 </select>
             </div>
-        
-
-      
-        
-
-        
-
         <!-- Tableau des prestataires -->
+        
         <div class="table-responsive">
-            <table class="table table-light table-borderless">
+            
+        
+            <!-- Affichage pour PC/Tablette (tableau classique) -->
+            <table class="table table-borderless table-hover table-light ">
                 <thead class="table-light">
                     <tr>
                         <th>Nom</th>
@@ -124,6 +135,7 @@
                         <th>Localisation</th>
                     </tr>
                 </thead>
+
                 <tbody id="prestataireTable">
                     {% for prestataire in prestataires %}
                         <tr>
@@ -140,26 +152,37 @@
             </table>
         </div>
 
-        <!-- Pagination -->
-        <div id="pagination" class="pagination-container"></div>
+            
+        
+            
 
-        <!-- Message d'alerte si aucun résultat -->
-        <div id="noResults" class="alert alert-warning text-center" style="display: none;">
-            Aucun prestataire trouvé.
-        </div>
+            <!-- Pagination -->
+    <div id="pagination" class="pagination-container"></div>
+
+    <!-- Message d'alerte si aucun résultat -->
+    <div id="noResults" class="alert alert-warning text-center" style="display: none;">
+        Aucun prestataire trouvé.
     </div>
+
 
     
 
 
-    <!-- Scripts -->
-    {% load static %}
-    <script>
-        console.log("Le fichier JS est chargé !");
-        
-    </script>
     <script src="{% static 'js/scripts.js' %}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <div class="footer" id="ft2">
+        ©2025 - CHANASASSURANCES By Antoine Missoup Konga
+    </div>
+    <style>
+        #ft2 {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #2006;
+            text-align: center;
+            padding-top: 10px;
+        }
+    </style>
     
 </body>
 </html>
