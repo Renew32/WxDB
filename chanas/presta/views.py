@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from .models import presta
+from .models import Presta
 from rest_framework import viewsets
 from .serializers import PrestaSerializer
 
@@ -11,10 +11,10 @@ from django.contrib import messages
 
 
 def list_presta(request):
-    prestataires = presta.objects.all()
+    prestataires = Presta.objects.all()
 
-    ville_unique = presta.objects.values_list('ville', flat=True).distinct().order_by('ville')
-    type_unique = presta.objects.values_list('type', flat=True).distinct().order_by('type')
+    ville_unique = Presta.objects.values_list('ville', flat=True).distinct().order_by('ville')
+    type_unique = Presta.objects.values_list('type', flat=True).distinct().order_by('type')
 
 
    # Nettoyer et supprimer les doublons manuellement
@@ -27,7 +27,7 @@ def list_presta(request):
 
 
 class PrestaViewSet(viewsets.ModelViewSet):
-    queryset = presta.objects.all()
+    queryset = Presta.objects.all()
     serializer_class = PrestaSerializer
 
 

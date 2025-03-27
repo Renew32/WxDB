@@ -1,7 +1,7 @@
 from rest_framework import serializers
-from .models import presta
+from .models import Presta
 
 class PrestaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = presta
+        model = Presta
         fields = '__all__'
