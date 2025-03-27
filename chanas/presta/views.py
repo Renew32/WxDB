@@ -38,10 +38,13 @@ def login_view(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         user = authenticate(request, username=email, password=password)
-        if user is  None:
+        if user is not None:
             login(request, user)
-            return redirect('home')  # Redirection vers la page d'accueil après connexion
+            # Si l'URL "next" est définie, rediriger vers cette page
+            next_url = request.GET.get('next', '/admin/')
+            return redirect(next_url)
         else:
-            messages.error(request, "Adresse e-mail ou mot de passe incorrect.")
-
+            messages.error(request, "Identifiants invalides.")
+    
     return render(request, 'presta/con.html')
+

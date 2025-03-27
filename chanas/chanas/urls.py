@@ -18,8 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from django.shortcuts import redirect
+from presta import views
 
 urlpatterns = [
+    path('', lambda request: redirect('prestataires/', permanent=True)),
+    path('admin/login/', lambda request: redirect('login_view')),
+    path('login/', views.login_view, name='login_view'),
     path('admin/', admin.site.urls),
     path('',include('presta.urls'))
 ]
