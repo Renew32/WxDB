@@ -8,6 +8,8 @@ from .serializers import PrestaSerializer
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from .forms import UserRegistrationForm
+
 
 
 def list_presta(request):
@@ -35,9 +37,9 @@ class PrestaViewSet(viewsets.ModelViewSet):
 
 def login_view(request):
     if request.method == 'POST':
-        email = request.POST.get('email')
+        username = request.POST.get('username')
         password = request.POST.get('password')
-        user = authenticate(request, username=email, password=password)
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             # Si l'URL "next" est définie, rediriger vers cette page
@@ -47,4 +49,20 @@ def login_view(request):
             messages.error(request, "Identifiants invalides.")
     
     return render(request, 'presta/con.html')
+
+def register_view(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
+            user.save()
+            # Authentifier l'utilisateur après l'enregistrement
+            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+            if user is not None:
+                login(request, user)
+            return redirect('login_view')  # Redirigez vers la page des prestataires après inscription
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'presta/register.html', {'form': form})
 

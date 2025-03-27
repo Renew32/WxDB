@@ -26,7 +26,8 @@ urlpatterns = [
     path('admin/login/', lambda request: redirect('login_view')),
     path('login/', views.login_view, name='login_view'),
     path('admin/', admin.site.urls),
-    path('',include('presta.urls'))
+    path('',include('presta.urls')),
+    
 ]
 
 if settings.DEBUG:

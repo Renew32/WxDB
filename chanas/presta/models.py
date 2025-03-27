@@ -31,4 +31,4 @@ class PrestaModificationLog(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)  # Date et heure de la modification
 
     def __str__(self):
-        return f'{self.action} on {self.presta.nom} by {self.modified_by} at {self.timestamp}'
+        return f'{self.action} Par {self.presta.nom} de {self.modified_by} à {self.timestamp}'

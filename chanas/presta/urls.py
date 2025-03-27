@@ -7,7 +7,8 @@ router = DefaultRouter()
 router.register(r'prestataires',PrestaViewSet)
 
 urlpatterns = [
+    path('register/', views.register_view, name='register'),
     path('prestataires/', list_presta, name='liste_prestataires'),
     path('api/', include(router.urls)),
-    path('login/', login_view, name='login')
+    path('login/', login_view, name='login'),
 ]

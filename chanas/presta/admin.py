@@ -22,6 +22,17 @@ class PrestaAdmin(admin.ModelAdmin):
             action=action
         )
 
+    def delete_model(self, request, obj):
+        """ Enregistre un log lorsqu'un prestataire est supprimé """
+        PrestaModificationLog.objects.create(
+            presta=obj,
+            modified_by=request.user,
+            action="Suppression"
+        )
+        super().delete_model(request, obj)  # Supprime l'objet
+
+    
+
 @admin.register(PrestaModificationLog)
 class PrestaModificationLogAdmin(admin.ModelAdmin):
     list_display = ('presta', 'modified_by', 'action', 'timestamp')
