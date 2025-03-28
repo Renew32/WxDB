@@ -13,10 +13,10 @@ from .forms import UserRegistrationForm
 
 
 def list_presta(request):
-    prestataires = Presta.objects.all()
+    prestataires = Presta.objects.filter(is_deleted=False)
 
-    ville_unique = Presta.objects.values_list('ville', flat=True).distinct().order_by('ville')
-    type_unique = Presta.objects.values_list('type', flat=True).distinct().order_by('type')
+    ville_unique = Presta.objects.filter(is_deleted=False).values_list('ville', flat=True).distinct().order_by('ville')
+    type_unique = Presta.objects.filter(is_deleted=False).values_list('type', flat=True).distinct().order_by('type')
 
 
    # Nettoyer et supprimer les doublons manuellement
@@ -24,7 +24,7 @@ def list_presta(request):
     type_unique = list(set(t.strip().lower().capitalize() for t in type_unique if t))
 
 
-    return render(request, 'presta/liste_presta.html', {'prestataires': prestataires, 'villes_uniques': ville_unique, 'types_uniques': type_unique} )
+    return render(request, 'presta/liste_presta.html', {'prestataires': prestataires, 'villes_uniques': ville_unique, 'types_uniques': type_unique}, )
 
 
 

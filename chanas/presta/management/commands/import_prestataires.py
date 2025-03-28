@@ -6,7 +6,7 @@ from django.core.management.base import BaseCommand
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chanas.settings')
 django.setup()
 
-from presta.models import presta
+from presta.models import Presta
 
 class Command(BaseCommand):
     help = 'Importer les prestataires depuis un fichier Excel'
@@ -35,7 +35,7 @@ class Command(BaseCommand):
             
             for index, row in df.iterrows():
                 try:
-                    presta.objects.update_or_create(
+                    Presta.objects.update_or_create(
                         nom=row['PRESTATAIRES'],
                         defaults={
                             'ville': row.get('LIEU', ''),
