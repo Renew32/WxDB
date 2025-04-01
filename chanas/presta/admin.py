@@ -8,7 +8,7 @@ class PrestaAdmin(admin.ModelAdmin):
     list_filter = ('ville', 'type', 'is_deleted')
     ordering = ('nom',)
     readonly_fields = ('modified_by',)
-    actions = ['hard_delete']
+
 
     def get_readonly_fields(self, request, obj=None):
         """ Rend le champ 'is_deleted' modifiable uniquement par le superadmin """
@@ -43,21 +43,6 @@ class PrestaAdmin(admin.ModelAdmin):
         """Utilise la suppression logique plutôt que physique"""
         obj.delete()  # Appelle la méthode delete() override du modèle
 
-    def hard_delete(self, request, queryset):
-        """Action admin pour suppression physique"""
-        for obj in queryset:
-            # Créer un log avant suppression physique
-            PrestaModificationLog.log_action(
-                presta=obj,
-                user=request.user,
-                action="Suppression physique",
-                details={
-                    "nom": obj.nom,
-                    "ville": obj.ville,
-                    "type": obj.type
-                }
-            )
-            super().delete_model(request, obj)
 
     def get_form(self, request, obj=None, **kwargs):
         form = super().get_form(request, obj, **kwargs)
