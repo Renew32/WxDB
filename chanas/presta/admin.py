@@ -1,5 +1,36 @@
 from django.contrib import admin
+from django import forms
 from .models import Presta, PrestaModificationLog
+
+
+class PrestaForm(forms.ModelForm):
+    ville = forms.ChoiceField(
+        choices=[],
+        required=True
+    )
+    type = forms.ChoiceField(
+        choices=[],
+        required=True
+    )
+
+    class Meta:
+        model = Presta
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        villes = Presta.objects.values_list('ville', flat=True).distinct()
+        types = Presta.objects.values_list('type', flat=True).distinct()
+
+        villes = list(set(villes))
+        types = list(set(types))
+
+
+
+        self.fields['ville'].choices = [('', 'Sélectionnez une ville')] + [(v, v) for v in villes]
+        self.fields['type'].choices = [('', 'Sélectionnez un type')] + [(t, t) for t in types]
+
+
 
 @admin.register(Presta)
 class PrestaAdmin(admin.ModelAdmin):
@@ -8,6 +39,7 @@ class PrestaAdmin(admin.ModelAdmin):
     list_filter = ('ville', 'type', 'is_deleted')
     ordering = ('nom',)
     readonly_fields = ('modified_by',)
+    form = PrestaForm
 
 
     def get_readonly_fields(self, request, obj=None):
