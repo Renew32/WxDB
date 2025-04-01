@@ -3,7 +3,7 @@ from django.dispatch import receiver
 from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 from presta.models import Presta  # Modèle à surveiller
-from .models import ModificationLog
+from .models import PrestaModificationLog
 
 @receiver(pre_save, sender=Presta)  # Remplace "Presta" par le modèle à suivre
 def log_presta_modification(sender, instance, **kwargs):
@@ -16,7 +16,7 @@ def log_presta_modification(sender, instance, **kwargs):
                 new_value = getattr(instance, field_name)
 
                 if old_value != new_value:  # Si une modification a eu lieu
-                    ModificationLog.objects.create(
+                    PrestaModificationLog.objects.create(
                         admin_user=instance.modified_by,  # Qui a fait la modification
                         model_name=sender.__name__,
                         object_id=instance.pk,

@@ -35,7 +35,7 @@ class PrestaForm(forms.ModelForm):
 
 @admin.register(Presta)
 class PrestaAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'ville', 'type', 'numero', 'latitude', 'longitude', 'is_deleted')
+    list_display = ('nom', 'ville', 'type', 'numero', 'latitude', 'longitude','localisation', 'is_deleted')
     search_fields = ('nom', 'ville', 'type')
     list_filter = ('ville', 'type', 'is_deleted')
     ordering = ('nom',)
@@ -94,7 +94,12 @@ class PrestaModificationLogAdmin(admin.ModelAdmin):
 
 
     def formatted_details(self, obj):
+        def format_value(value):
+            """Formate proprement les valeurs, y compris les dictionnaires imbriqués."""
+            if isinstance(value, dict):
+                return '\n    '.join(f'{sub_k}: {sub_v}' for sub_k, sub_v in value.items())
+            return str(value)
+
         if obj.details:
-            return '\n'.join(f'{k}: {v}' for k, v in obj.details.items())
-        return 'Aucun détail'
-    formatted_details.short_description = 'Détails formatés'
+            return '\n'.join(f"{k.capitalize()}:\n    {format_value(v)}" for k, v in obj.details.items())
+        return "Aucun détail disponible."
