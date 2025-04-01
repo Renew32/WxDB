@@ -39,7 +39,7 @@ class PrestaAdmin(admin.ModelAdmin):
     search_fields = ('nom', 'ville', 'type')
     list_filter = ('ville', 'type', 'is_deleted')
     ordering = ('nom',)
-    readonly_fields = ('modified_by',)
+    readonly_fields = ('modified_by', 'localisation')
     form = PrestaForm
 
 
