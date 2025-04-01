@@ -40,7 +40,7 @@ class Presta(models.Model):
     def save(self, *args, **kwargs):
         """Surcharge la méthode save pour stocker le lien Google Maps"""
         if self.latitude is not None and self.longitude is not None:
-            self.localisation = self.generate_google_maps_url()
+            self.localisation = self.get_google_maps_url()
         else:
             self.localisation = None
 
