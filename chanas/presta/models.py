@@ -7,8 +7,10 @@ class Presta(models.Model):
     nom = models.CharField(max_length=255)
     ville = models.CharField(max_length=255)
     type = models.CharField(max_length=255)
-    numero = models.TextField(max_length=255)
-    localisation = models.TextField(max_length=255)
+    numero = models.CharField(max_length=255)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+    localisation = models.TextField(max_length=500, blank=True, null=True)
     modified_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     is_deleted = models.BooleanField(default=False)
 
@@ -21,17 +23,28 @@ class Presta(models.Model):
         return self.nom
 
     def get_google_maps_url(self):
-        """Génère un lien Google Maps vers l'adresse de l'entreprise"""
-        params = {
-            "api": 1,
-            "destination": f"{self.nom}, {self.ville}"
-        }
-        return f"https://www.google.com/maps/dir/?{urlencode(params)}"
+            """Génère un lien Google Maps vers la destination"""
+            if self.latitude and self.longitude:
+                params = {
+                    "api": 1,
+                    "destination": f"{self.latitude},{self.longitude}"
+                }
+                return f"https://www.google.com/maps/dir/?{urlencode(params)}"
+            return "Coordonnées GPS non disponibles"
 
     def delete(self, *args, **kwargs):
         """Override de la méthode delete pour une suppression logique"""
         self.is_deleted = True
         self.save()
+
+    def save(self, *args, **kwargs):
+        """Surcharge la méthode save pour stocker le lien Google Maps"""
+        if self.latitude is not None and self.longitude is not None:
+            self.localisation = self.generate_google_maps_url()
+        else:
+            self.localisation = None
+
+        super(Presta, self).save(*args, **kwargs)  # Appel à la méthode save() de la classe parent
 
 class PrestaModificationLog(models.Model):
     presta = models.ForeignKey(

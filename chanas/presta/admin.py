@@ -22,8 +22,9 @@ class PrestaForm(forms.ModelForm):
         villes = Presta.objects.values_list('ville', flat=True).distinct()
         types = Presta.objects.values_list('type', flat=True).distinct()
 
-        villes = list(set(villes))
-        types = list(set(types))
+        villes = list(set(t.strip().title() for t in villes if t))
+
+        types = list(set(t.strip().title() for t in types if t))
 
 
 
@@ -34,7 +35,7 @@ class PrestaForm(forms.ModelForm):
 
 @admin.register(Presta)
 class PrestaAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'ville', 'type', 'numero', 'localisation', 'is_deleted')
+    list_display = ('nom', 'ville', 'type', 'numero', 'latitude', 'longitude', 'is_deleted')
     search_fields = ('nom', 'ville', 'type')
     list_filter = ('ville', 'type', 'is_deleted')
     ordering = ('nom',)
