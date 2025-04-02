@@ -144,7 +144,9 @@
                             <td class="type">{{ prestataire.type }}</td>
                             <td class="numero">{{ prestataire.numero }}</td>
                             <td class="localisation">
-                                <a class="itinéraire" href="{{ prestataire.localisation }}">Itinéraire</a>
+                                {% if prestataire.localisation %}
+                                <a class="itinéraire" href="{{ prestataire.localisation }}" target="_blank">Voir Itinéraire</a>
+                                {% endif %}
                             </td>
                         </tr>
                     {% endfor %}

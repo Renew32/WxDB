@@ -22,15 +22,17 @@ class Presta(models.Model):
     def __str__(self):
         return self.nom
 
+
+
     def get_google_maps_url(self):
-            """Génère un lien Google Maps vers la destination"""
-            if self.latitude and self.longitude:
-                params = {
-                    "api": 1,
-                    "destination": f"{self.latitude},{self.longitude}"
-                }
-                return f"https://www.google.com/maps/dir/?{urlencode(params)}"
-            return "Coordonnées GPS non disponibles"
+        """Génère un lien Google Maps vers la destination"""
+        if self.latitude and self.longitude:
+            params = {
+                "api": 1,
+                "destination": f"{self.latitude},{self.longitude}"
+            }
+            return f"https://www.google.com/maps/dir/?{urlencode(params)}"
+        return "Coordonnées GPS non disponibles"
 
     def delete(self, *args, **kwargs):
         """Override de la méthode delete pour une suppression logique"""
