@@ -1,9 +1,11 @@
 from django.shortcuts import render
 
 # Create your views here.
+import openpyxl
 from .models import Presta
 from rest_framework import viewsets
 from .serializers import PrestaSerializer
+from django.http import HttpResponse
 
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -65,4 +67,39 @@ def register_view(request):
     else:
         form = UserRegistrationForm()
     return render(request, 'presta/register.html', {'form': form})
+
+def export_presta_to_excel(request):
+    """ Exporte les données de la table Presta dans un fichier Excel. """
+    
+    # Création d'un fichier Excel
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Prestataires"
+
+    # Définition des en-têtes
+    headers = ["ID", "Nom", "Ville", "Type", "Numéro", "Latitude", "Longitude", "Localisation", "Supprimé"]
+    ws.append(headers)
+
+    # Récupération des données
+    prestataires = Presta.objects.all()
+
+    for presta in prestataires:
+        ws.append([
+            presta.id, 
+            presta.nom, 
+            presta.ville, 
+            presta.type, 
+            presta.numero, 
+            presta.latitude, 
+            presta.longitude, 
+            presta.localisation,
+            "Oui" if presta.is_deleted else "Non"
+        ])
+
+    # Création de la réponse HTTP avec l'Excel
+    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    response['Content-Disposition'] = 'attachment; filename="Prestataire.xlsx"'
+    wb.save(response)
+
+    return response
 

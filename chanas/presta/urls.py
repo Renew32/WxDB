@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import list_presta, PrestaViewSet, login_view
+from .views import list_presta, PrestaViewSet, login_view, export_presta_to_excel
 from rest_framework.routers import DefaultRouter
 from . import views
 
@@ -11,4 +11,5 @@ urlpatterns = [
     path('prestataires/', list_presta, name='liste_prestataires'),
     path('api/', include(router.urls)),
     path('login/', login_view, name='login'),
+    path('export-excel/', export_presta_to_excel, name='export_presta_excel'),
 ]

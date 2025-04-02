@@ -1,6 +1,11 @@
-from django.contrib import admin
+from django.contrib import admin,messages
 from django import forms
 from .models import Presta, PrestaModificationLog
+from django.utils.html import format_html
+from django.http import HttpResponseRedirect
+from .views import export_presta_to_excel
+from django.urls import path
+from django.shortcuts import redirect
 
 
 class PrestaForm(forms.ModelForm):
@@ -41,6 +46,28 @@ class PrestaAdmin(admin.ModelAdmin):
     ordering = ('nom',)
     readonly_fields = ('modified_by', 'localisation')
     form = PrestaForm
+    list_per_page = 40
+    actions = ['export_as_excel']
+
+    def export_as_excel(self, request, queryset):
+        return export_presta_to_excel(request)
+
+    export_as_excel.short_description = "Exporter en Excel"
+
+    def get_urls(self):
+        urls = super().get_urls()
+        custom_urls = [
+            path('export-excel/', self.admin_site.admin_view(self.export_excel_view), name="export_presta_excel_admin"),
+        ]
+        return custom_urls + urls
+
+    def export_excel_view(self, request):
+        return export_presta_to_excel(request)
+
+    def export_button(self, request):
+        return format_html('<a class="button" href="{}">Exporter en Excel</a>', '/admin/export-excel/')
+
+    
 
 
     def get_readonly_fields(self, request, obj=None):
@@ -82,6 +109,8 @@ class PrestaAdmin(admin.ModelAdmin):
         existing_types = Presta.objects.values_list('type', flat=True).distinct()
         form.base_fields['type'].choices = [(t, t) for t in existing_types]
         return form
+
+
 
 
 @admin.register(PrestaModificationLog)
