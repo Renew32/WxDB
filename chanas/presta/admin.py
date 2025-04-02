@@ -22,9 +22,9 @@ class PrestaForm(forms.ModelForm):
         villes = Presta.objects.values_list('ville', flat=True).distinct()
         types = Presta.objects.values_list('type', flat=True).distinct()
 
-        villes = list(set(t.strip() for t in villes if t))
+        villes = sorted(list(set(t.strip() for t in villes if t)))
 
-        types = list(set(t.strip() for t in types if t))
+        types = sorted(list(set(t.strip() for t in types if t)))
 
 
 
