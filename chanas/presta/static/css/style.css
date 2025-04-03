@@ -116,8 +116,7 @@ body {
 }
 
 .border-bottom{
-    background-image: url("../img/terre2.jpeg");
-    background-size: cover;
+    background-color: whitesmoke ;
     background-position: center;
     background-repeat: no-repeat;
     min-height: 300px; /* Hauteur pour s'assurer que l'image apparaît */
