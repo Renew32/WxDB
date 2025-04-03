@@ -52,9 +52,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CSRF_COOKIE_SECURE = False  # Utiliser False en développement (True en production uniquement si HTTPS)
+CSRF_COOKIE_SECURE = False  # En dev, car pas de HTTPS
 CSRF_COOKIE_HTTPONLY = True
 CSRF_TRUSTED_ORIGINS = ['http://127.0.0.1', 'http://localhost']
+
+SESSION_COOKIE_SECURE = False  # Pas de HTTPS en dev
+SECURE_SSL_REDIRECT = False  # Pas de redirection HTTPS en dev
 
 ROOT_URLCONF = 'chanas.urls'
 
