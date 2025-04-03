@@ -7,8 +7,27 @@ document.addEventListener("DOMContentLoaded", function () {
     const entriesSelect = document.getElementById("entriesSelect");
     const paginationContainer = document.getElementById("pagination");
 
-    let rowsPerPage = parseInt(entriesSelect.value, 10);
+    let rowsPerPage = 15;
     let currentPage = 1;
+
+    //filtre alphabetique
+    function sortOptions(selectElement) {
+        let options = Array.from(selectElement.options);
+
+        // Garder l'option "Toutes les villes" en premier
+        let firstOption = options.shift();
+
+        // Trier par ordre alphabétique (insensible à la casse)
+        options.sort((a, b) => a.text.localeCompare(b.text, "fr", { sensitivity: "base" }));
+
+        // Réinsérer l'option en tête
+        selectElement.innerHTML = "";
+        selectElement.appendChild(firstOption);
+        options.forEach(option => selectElement.appendChild(option));
+    }
+
+    sortOptions(filterVille);
+    sortOptions(filterType);
 
     function filterTable() {
         let villeValue = filterVille.value.toLowerCase();
@@ -50,71 +69,70 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function updatePaginationControls(totalPages, filteredRows) {
         paginationContainer.innerHTML = "";
+        let maxVisiblePages = 3;
 
-        // Toujours afficher la pagination, même avec une seule page
-        for (let i = 1; i <= totalPages; i++) {
-            let btn = document.createElement("button");
-            btn.textContent = i;
-            btn.className = `page-btn ${i === currentPage ? "active" : ""}`;
-            btn.addEventListener("click", function () {
-                currentPage = i;
-                paginateTable(filteredRows);
-            });
-            paginationContainer.appendChild(btn);
-        }
-
-        // Ajouter "Précédent" et "Suivant" si plus d'une page
         if (totalPages > 1) {
-            let prevBtn = document.createElement("button");
-            prevBtn.textContent = "⬅ Précédent";
-            prevBtn.className = "page-btn";
-            prevBtn.disabled = currentPage === 1;
-            prevBtn.addEventListener("click", function () {
-                if (currentPage > 1) {
-                    currentPage--;
-                    paginateTable(filteredRows);
-                }
-            });
+            let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+            let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
 
-            let nextBtn = document.createElement("button");
-            nextBtn.textContent = "Suivant ➡";
-            nextBtn.className = "page-btn";
-            nextBtn.disabled = currentPage === totalPages;
-            nextBtn.addEventListener("click", function () {
-                if (currentPage < totalPages) {
-                    currentPage++;
-                    paginateTable(filteredRows);
-                }
-            });
+            if (endPage - startPage + 1 < maxVisiblePages) {
+                startPage = Math.max(1, endPage - maxVisiblePages + 1);
+            }
 
-            paginationContainer.prepend(prevBtn);
-            paginationContainer.appendChild(nextBtn);
+
+            // Ajouter "1" et "..." si besoin
+            if (startPage > 1) {
+                let firstPageBtn = document.createElement("button");
+                firstPageBtn.textContent = "1";
+                firstPageBtn.className = "page-btn";
+                firstPageBtn.addEventListener("click", function () {
+                    currentPage = 1;
+                    paginateTable(filteredRows);
+                });
+                paginationContainer.appendChild(firstPageBtn);
+
+                if (startPage > 2) {
+                    let dots = document.createElement("span");
+                    dots.textContent = "...";
+                    dots.className = "page-btn disabled";
+                    paginationContainer.appendChild(dots);
+                }
+            }
+
+            // Afficher les numéros de pages actifs
+            for (let i = startPage; i <= endPage; i++) {
+                let btn = document.createElement("button");
+                btn.textContent = i;
+                btn.className = `page-btn ${i === currentPage ? "active" : ""}`;
+                btn.addEventListener("click", function () {
+                    currentPage = i;
+                    paginateTable(filteredRows);
+                });
+                paginationContainer.appendChild(btn);
+            }
+
+            // Ajouter "..." et dernière page si besoin
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    let dots = document.createElement("span");
+                    dots.textContent = "...";
+                    dots.className = "page-btn disabled";
+                    paginationContainer.appendChild(dots);
+                }
+
+                let lastPageBtn = document.createElement("button");
+                lastPageBtn.textContent = totalPages;
+                lastPageBtn.className = "page-btn";
+                lastPageBtn.addEventListener("click", function () {
+                    currentPage = totalPages;
+                    paginateTable(filteredRows);
+                });
+                paginationContainer.appendChild(lastPageBtn);
+            }
+
+            
         }
     }
-
-    function clearAll() {
-        filterVille.value = "";
-        filterType.value = "";
-        searchInput.value = "";
-        noResults.innerHTML = "";
-        entriesSelect.value = "5"; // ou une valeur par défaut
-        paginationContainer.innerHTML = "";
-
-        // Réafficher toutes les lignes du tableau
-        document.querySelectorAll("#prestataireTable tr").forEach(row => {
-            row.style.display = "";
-        });
-
-        // Supprimer le message "Aucun résultat"
-        document.getElementById("noResults").innerHTML = "";
-
-        // Réinitialiser la pagination
-        document.getElementById("pagination").innerHTML = "";
-    }
-    
-    
-
-    
 
     // Événements
     filterVille.addEventListener("change", filterTable);
@@ -126,9 +144,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     filterTable();
-    clearAll();
-    
-
-    
-    
 });

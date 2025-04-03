@@ -25,7 +25,7 @@
     display: flex; /* Aligner les éléments sur la même ligne */
     align-items: center; /* Centrer verticalement */
     justify-content: space-between; /* Répartir les liens */
-    gap: 3px;
+    gap: 1px;
     
 }
 
@@ -116,8 +116,7 @@ body {
 }
 
 .border-bottom{
-    background-image: url("../img/sante.png");
-    background-size: cover;
+    background-color: whitesmoke ;
     background-position: center;
     background-repeat: no-repeat;
     min-height: 300px; /* Hauteur pour s'assurer que l'image apparaît */
