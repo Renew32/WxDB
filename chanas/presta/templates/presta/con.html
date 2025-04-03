@@ -13,7 +13,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background-color: #0033a0;
+            background-color: rgb(41,92,165);
         }
 
         .container {
@@ -42,9 +42,8 @@
             margin-bottom: 20px;
         }
         .logo img {
-            width: 60px;
-            height: 60px;
-            background-color: #1f3c88;
+
+            width: 300px;
             padding: 10px;
             border-radius: 5px;
         }
@@ -57,12 +56,12 @@
             border-radius: 5px;
         }
         .btn-primary {
-            background-color: #1f3c88;
+            background-color: rgb(41,92,165);
             border: none;
-            border-radius: 5px;
+            border-radius: 20px;
         }
         .btn-primary:hover {
-            background-color: #162c6d;
+            background-color : rgb(32, 78, 142) /* Change la couleur de fond en noir */
         }
         .error-message {
             color: red;
@@ -76,6 +75,10 @@
             font-size: 12px;
             color: #666;
         }
+
+        #text-2{
+            color: white;
+        }
         
     </style>
 </head>
@@ -86,8 +89,7 @@
 
     <div class="login-container">
         <div class="logo">
-            <img src="{% static '/img/chanas.png' %}" alt="Logo">
-            <h3>Chanas Assurances S.A.</h3>
+            <img src="{% static '/img/logo.png' %}" alt="Logo" >
         </div>
 
         {% if messages %}
@@ -99,7 +101,7 @@
         <form method="POST">
             {% csrf_token %}
             <div class="mb-3" id="text">
-                <label for="username" class="form-label">username</label>
+                <label for="username" class="form-label">Nom d'utilisateur</label>
                 <input type="username" class="form-control" id="username" name="username" required>
             </div>
             <div class="mb-3" id="text">
@@ -110,7 +112,7 @@
                 <input type="checkbox" class="form-check-input" id="rememberMe">
                 <label class="form-check-label" for="rememberMe">Garder ma session ouverte</label>
             </div>
-            <button type="submit" class="btn btn-primary w-100" id="text">Connexion</button>
+            <button type="submit" class="btn btn-primary w-100" id="text-2">Connexion</button>
         </form>
 
         <p class="text-center mt-3" id="text">
