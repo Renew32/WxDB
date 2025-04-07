@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-#3&y$5y&pyywoes!o+1_@1l9=b@_0l1b^w(iqy*j!3-!=v%&&a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['wxdbx.onrender.com']
+
+# ALLOWED_HOSTS = ['wxdbx.onrender.com']
+ALLOWED_HOSTS =[]
 
 
 # Application definition
@@ -138,9 +140,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, "presta/static")]
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "presta/static"),
+]
 
 
 MEDIA_URL = '/media/'
