@@ -143,10 +143,12 @@ STATIC_URL = '/static/'
 
 if not DEBUG:
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATICFILES_DIRS = []  # vide en production
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "presta/static"),
-]
+else:
+    STATICFILES_DIRS = [
+        os.path.join(BASE_DIR, "presta/static")
+    ]
 
 
 MEDIA_URL = '/media/'
