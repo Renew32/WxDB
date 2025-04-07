@@ -59,19 +59,22 @@ def register_view(request):
             user = form.save(commit=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
-            # Authentifier l'utilisateur après l'enregistrement
+
+            # Authentifier l'utilisateur après l'inscription
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-            return redirect('login_view')  # Redirigez vers la page des prestataires après inscription
+                messages.success(request, "Inscription réussie ! Vous êtes maintenant connecté.")
+                return redirect('liste_presta')  # Redirection vers la liste des prestataires
+
     else:
         form = UserRegistrationForm()
     return render(request, 'presta/register.html', {'form': form})
 
 def export_presta_to_excel(request):
     """ Exporte les données de la table Presta dans un fichier Excel. """
-    
-    # Création d'un fichier Excel
+
+    # Création du fichier Excel
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Prestataires"
@@ -80,25 +83,21 @@ def export_presta_to_excel(request):
     headers = ["ID", "Nom", "Ville", "Type", "Numéro", "Latitude", "Longitude", "Localisation", "Supprimé"]
     ws.append(headers)
 
-    # Récupération des données
-    prestataires = Presta.objects.all()
+    # Récupération des données et insertion optimisée
+    prestataires = Presta.objects.all().values_list(
+        'id', 'nom', 'ville', 'type', 'numero', 'latitude', 'longitude', 'localisation', 'is_deleted'
+    )
 
-    for presta in prestataires:
-        ws.append([
-            presta.id, 
-            presta.nom, 
-            presta.ville, 
-            presta.type, 
-            presta.numero, 
-            presta.latitude, 
-            presta.longitude, 
-            presta.localisation,
-            "Oui" if presta.is_deleted else "Non"
-        ])
+    ws.extend([
+        list(presta[:-1]) + ["Oui" if presta[-1] else "Non"]
+        for presta in prestataires
+    ])
 
-    # Création de la réponse HTTP avec l'Excel
-    response = HttpResponse(content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
-    response['Content-Disposition'] = 'attachment; filename="Prestataire.xlsx"'
+    # Génération de la réponse HTTP
+    response = HttpResponse(
+        content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+    response['Content-Disposition'] = 'attachment; filename="Prestataires.xlsx"'
     wb.save(response)
 
     return response

@@ -117,7 +117,7 @@
         
             <!-- Affichage pour PC/Tablette (tableau classique) -->
             <table class="table table-borderless table-hover table-light ">
-                <thead class="table-light">
+                <thead class="table-light text-center">
                     <tr>
                         <th>Nom</th>
                         <th>Ville</th>
@@ -131,10 +131,20 @@
                     {% for prestataire in prestataires %}
                         <tr>
                             <td>{{ prestataire.nom }}</td>
-                            <td class="ville">{{ prestataire.ville }}</td>
-                            <td class="type">{{ prestataire.type }}</td>
-                            <td class="numero">{{ prestataire.numero }}</td>
-                            <td class="localisation">
+                            <td class="ville text-center">{{ prestataire.ville }}</td>
+                            <td class="type text-center">{{ prestataire.type }}</td>
+
+                            
+                            <td class="numero text-center">
+                                {% if prestataire.numero != "nan" %}
+                                    {{ prestataire.numero }}
+                                {% else %}
+                                   ~~~~ 
+                                {% endif %}
+                            </td>
+                            
+
+                            <td class="localisation text-center">
                                 {% if prestataire.localisation %}
                                 <a class="itinéraire" href="{{ prestataire.localisation }}" target="_blank">Voir Itinéraire</a>
                                 {% endif %}
