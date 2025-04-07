@@ -1,1 +1,1 @@
-web: gunicorn chanas.wsgi
+web: gunicorn chanas.wsgi:application
