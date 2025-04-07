@@ -11,6 +11,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegistrationForm
+from django.core.exceptions import ValidationError
 
 
 
@@ -56,19 +57,30 @@ def register_view(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.set_password(form.cleaned_data['password'])
-            user.save()
+            try:
+                user = form.save(commit=False)
+                user.set_password(form.cleaned_data['password'])
+                user.save()
 
-            # Authentifier l'utilisateur après l'inscription
-            user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user is not None:
-                login(request, user)
-                messages.success(request, "Inscription réussie ! Vous êtes maintenant connecté.")
-                return redirect('liste_presta')  # Redirection vers la liste des prestataires
-
+                
+                user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+                if user is not None:
+                    login(request, user)
+                    messages.success(request, "Inscription réussie ! Veuillez attendre validation des administrateurs.")
+                    return redirect('login_view')
+                else:
+                    messages.error(request, "Erreur lors de l'authentification. Veuillez réessayer.")
+            except ValidationError as e:
+                messages.error(request, f"Erreur de validation : {e}")
+        else:
+            # Gestion des erreurs spécifiques
+            
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{error}")
     else:
         form = UserRegistrationForm()
+
     return render(request, 'presta/register.html', {'form': form})
 
 def export_presta_to_excel(request):
