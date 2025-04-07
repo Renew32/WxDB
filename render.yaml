@@ -1,0 +1,20 @@
+databases:
+  - name: db.sqlite3
+    plan: free
+    databaseName: db.sqlite3
+    user: chanas
+
+services:
+  - type: web
+    plan: free
+    name: chanas
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn chanas.wsgi:application"
+    envVars:
+      - key: DATABASE_URL
+        value: "sqlite:///db.sqlite3"  # Configuration SQLite
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
