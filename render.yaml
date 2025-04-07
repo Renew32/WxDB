@@ -1,8 +1,7 @@
 databases:
   - name: db.sqlite3
     plan: free
-    databaseName: db.sqlite3
-    user: chanas
+
 
 services:
   - type: web
