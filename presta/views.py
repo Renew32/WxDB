@@ -12,6 +12,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from .forms import UserRegistrationForm
 from django.core.exceptions import ValidationError
+from datetime import datetime
 
 
 
@@ -86,30 +87,25 @@ def register_view(request):
 def export_presta_to_excel(request):
     """ Exporte les données de la table Presta dans un fichier Excel. """
 
-    # Création du fichier Excel
     wb = openpyxl.Workbook()
     ws = wb.active
     ws.title = "Prestataires"
 
-    # Définition des en-têtes
     headers = ["ID", "Nom", "Ville", "Type", "Numéro", "Latitude", "Longitude", "Localisation", "Supprimé"]
     ws.append(headers)
 
-    # Récupération des données et insertion optimisée
     prestataires = Presta.objects.all().values_list(
         'id', 'nom', 'ville', 'type', 'numero', 'latitude', 'longitude', 'localisation', 'is_deleted'
     )
 
-    ws.extend([
-        list(presta[:-1]) + ["Oui" if presta[-1] else "Non"]
-        for presta in prestataires
-    ])
+    for presta in prestataires:
+        ws.append(list(presta[:-1]) + ["Oui" if presta[-1] else "Non"])
 
-    # Génération de la réponse HTTP
     response = HttpResponse(
         content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
-    response['Content-Disposition'] = 'attachment; filename="Prestataires.xlsx"'
+    date_str = datetime.now().strftime("%Hh-%Mmin_%d-%m-%y")
+    response['Content-Disposition'] = f'attachment; filename="Prestataires_Soins_Chanas_{date_str}.xlsx"'
     wb.save(response)
 
     return response
