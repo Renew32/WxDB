@@ -1,0 +1,143 @@
+@import "bootstrap/scss/functions";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/utilities";
+@import "node_modules/bootstrap/scss/bootstrap";
+
+
+
+.top-navbar {
+    background-color: #EAECF6;
+    z-index: 1050; /* Toujours au-dessus */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 50px; /* Ajuste si nécessaire */
+    display: inline;
+
+}
+
+.bottom-navbar {
+    background-color:  rgb(41, 92, 165);
+    z-index: 1040;
+    display: inline;
+    height: 75px;
+}
+
+.nav-link{
+    color: white;
+}
+
+/* Empêche le contenu d'être caché sous les navbars */
+body {
+    padding-top: calc(50px + 75px); /* Calcule automatiquement la hauteur des navbars */
+    background-color: whitesmoke
+}
+
+#table{
+    padding-top: 45px;
+}
+
+
+#text-navbar2{
+    padding-top: 10px;
+}
+
+
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+
+.page-btn {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    margin: 5px;
+    cursor: pointer;
+    background: white;
+    font-size: 14px;
+    border-radius: 20px;
+}
+
+.page-btn.active {
+    background:  rgb(41, 92, 165);
+    color: white;
+    font-weight: bold;
+
+}
+
+#noResults {
+    background-color:  rgb(41, 92, 165);  /* Fond bleu */
+    color: white;  /* Texte blanc */
+    text-align: center;
+    padding: 10px;
+    border-radius: 20px; /* Coins arrondis */
+    font-weight: bold;
+    font-size: large;
+}
+
+
+
+
+
+
+
+
+.text-body-emphasis {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%; /* Assure que le conteneur prend toute la largeur */
+    margin: 0 auto; /* Centre le conteneur */
+    padding-top: 80px; /* Ajuste selon l'espace nécessaire */
+    color: rgb(41, 92, 165) !important; 
+    text-size-adjust: 100%;
+    
+
+}
+
+
+#searchInput {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 14px;
+    outline: none;
+    transition: border 0.3s ease-in-out;
+}
+
+#searchInput:focus {
+    border-color: rgb(41, 92, 165);
+}
+
+.navbar-toggler {
+    filter: invert(100%); /* Change la couleur en blanc */
+}
+
+#navbarNav{
+    background-color: rgb(41, 92, 165);
+    align-content: center;
+
+}
+
+.animated-toggler[aria-expanded="true"] .navbar-toggler-icon {
+    transform: rotate(180deg);
+    transition: transform .6s ease-in-out;
+}
+
+.animated-toggler[aria-expanded="false"] .navbar-toggler-icon {
+    transform: rotate(0);
+    transition: transform .6s ease-in-out;
+}
+
+
+#entriesSelect, #filterVille, #filterType, #navbarNav{
+    border-radius: 20px;
+}
+
+#HEAD{
+    margin-top: 50px;
+    text-size-adjust: 100%;
+}
